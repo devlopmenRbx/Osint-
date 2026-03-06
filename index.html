@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Advanced OSINT Terminal</title>
+
+<style>
+body{
+background:#000;
+color:#00ff00;
+font-family:monospace;
+margin:0;
+}
+
+.terminal{
+padding:20px;
+height:100vh;
+overflow:auto;
+}
+
+input{
+background:black;
+border:none;
+color:#00ff00;
+font-family:monospace;
+font-size:16px;
+outline:none;
+width:80%;
+}
+
+.prompt{
+color:#00ff00;
+}
+
+.output{
+white-space:pre-line;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="terminal">
+
+<div class="output" id="output">
+Kali OSINT Terminal v2
+Type help for commands
+</div>
+
+<div class="prompt">
+root@kali:~# <input id="cmd">
+</div>
+
+</div>
+
+<script>
+
+let input=document.getElementById("cmd");
+let output=document.getElementById("output");
+
+input.addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+
+let command=input.value;
+
+output.innerHTML+="\nroot@kali:~# "+command+"\n";
+
+run(command);
+
+input.value="";
+
+}
+
+});
+
+function run(cmd){
+
+let args=cmd.split(" ");
+let target=args[1];
+
+if(cmd==="help"){
+
+output.innerHTML+=`
+Commands:
+
+scan USERNAME
+google NAME
+whois DOMAIN
+breach EMAIL
+image
+clear
+`;
+
+}
+
+else if(cmd.startsWith("scan")){
+
+output.innerHTML+=`
+Scanning social media...
+
+Instagram:
+https://instagram.com/${target}
+
+TikTok:
+https://tiktok.com/@${target}
+
+Facebook:
+https://facebook.com/${target}
+
+Reddit:
+https://reddit.com/user/${target}
+
+GitHub:
+https://github.com/${target}
+
+Scan completed.
+`;
+
+}
+
+else if(cmd.startsWith("google")){
+
+window.open("https://www.google.com/search?q="+target);
+
+}
+
+else if(cmd.startsWith("whois")){
+
+window.open("https://who.is/whois/"+target);
+
+}
+
+else if(cmd.startsWith("breach")){
+
+window.open("https://haveibeenpwned.com/unifiedsearch/"+target);
+
+}
+
+else if(cmd==="image"){
+
+window.open("https://images.google.com");
+
+}
+
+else if(cmd==="clear"){
+
+output.innerHTML="";
+
+}
+
+else{
+
+output.innerHTML+="Command not found";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
